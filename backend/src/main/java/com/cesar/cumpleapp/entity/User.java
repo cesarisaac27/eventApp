@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-
 public class User {
 
     @Id
@@ -25,23 +24,6 @@ public class User {
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
-    @Column(name = "event_name")
-    private String eventName;
-
-    @Column(name = "event_description")
-    private String eventDescription;
-
-    private String quote;
-
-    @Column(name = "cover_image_url")
-    private String coverImageUrl;
-
-    @Column(name = "music_url")
-    private String musicUrl;
-
-    @Column(unique = true)
-    private String slug;
-
     private Boolean active;
 
     @Column(name = "created_at")
@@ -49,5 +31,4 @@ public class User {
 
     @Column(nullable = false)
     private String role;
-    // getters y setters
 }

@@ -1,16 +1,17 @@
 package com.cesar.cumpleapp.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateEventRequest {
+@AllArgsConstructor
+public class EventOwnerDto {
 
+    private Long userId;
     private String email;
-    private String password;
-
+    private Long eventId;
     private String eventName;
-
     private String slug;
 }

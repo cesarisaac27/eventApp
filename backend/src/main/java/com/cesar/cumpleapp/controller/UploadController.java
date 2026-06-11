@@ -12,9 +12,7 @@ public class UploadController {
 
     private final CloudinaryService cloudinaryService;
 
-    public UploadController(
-            CloudinaryService cloudinaryService
-    ) {
+    public UploadController(CloudinaryService cloudinaryService) {
         this.cloudinaryService = cloudinaryService;
     }
 

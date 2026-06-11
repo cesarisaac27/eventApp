@@ -11,15 +11,11 @@ public class CloudinaryService {
 
     private final Cloudinary cloudinary;
 
-    public CloudinaryService(
-            Cloudinary cloudinary
-    ) {
+    public CloudinaryService(Cloudinary cloudinary) {
         this.cloudinary = cloudinary;
     }
 
-    public String uploadFile(
-            MultipartFile file
-    ) throws Exception {
+    public String uploadFile(MultipartFile file) throws Exception {
 
         Map<?, ?> result =
                 cloudinary.uploader()

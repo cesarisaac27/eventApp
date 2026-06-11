@@ -1,18 +1,14 @@
 package com.cesar.cumpleapp.service;
 
-import com.cesar.cumpleapp.dto.RegisterRequest;
-import com.cesar.cumpleapp.dto.UpdateProfileRequest;
-import com.cesar.cumpleapp.dto.UserResponse;
+import com.cesar.cumpleapp.dto.*;
 import com.cesar.cumpleapp.entity.User;
 import com.cesar.cumpleapp.repository.UserRepository;
+import com.cesar.cumpleapp.security.JwtService;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.cesar.cumpleapp.security.JwtService;
+
 import java.time.LocalDateTime;
-
-import com.cesar.cumpleapp.dto.CreateEventRequest;
-import com.cesar.cumpleapp.dto.LoginRequest;
-
 
 @Service
 public class UserService {
@@ -22,6 +18,7 @@ public class UserService {
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public UserService(UserRepository userRepository, JwtService jwtService) {
+
         this.userRepository = userRepository;
         this.jwtService = jwtService;
     }
@@ -29,71 +26,77 @@ public class UserService {
     public UserResponse register(RegisterRequest request) {
 
         if (userRepository.existsByEmail(request.getEmail())) {
+
             throw new RuntimeException("Email already registered");
         }
 
         User user = new User();
 
         user.setEmail(request.getEmail());
+
         user.setPasswordHash(encoder.encode(request.getPassword()));
+
+        user.setRole("SUPER_ADMIN");
+
         user.setActive(true);
+
         user.setCreatedAt(LocalDateTime.now());
 
         User saved = userRepository.save(user);
 
-        return new UserResponse(saved.getId(), saved.getEmail(), saved.getSlug());
+        return new UserResponse(saved.getId(), saved.getEmail(), saved.getRole());
     }
 
     public String login(LoginRequest request) {
 
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("User not found"));
+        String emailRequest = request.getEmail();
+        String passwordRequest = request.getPassword();
 
-        if (!encoder.matches(request.getPassword(), user.getPasswordHash())) {
+        User user = userRepository.findByEmail(emailRequest).orElseThrow(() ->
+                                new RuntimeException("User not found"));
+
+        if (!encoder.matches(passwordRequest, user.getPasswordHash())) {
+
             throw new RuntimeException("Invalid credentials");
         }
 
         return jwtService.generateToken(user.getEmail(), user.getId());
     }
 
-    public UserResponse updateProfile(Long userId, UpdateProfileRequest request) {
+    /*public UserResponse createEventOwner(CreateEventOwnerRequest request) {
 
-        User user = userRepository.findById(userId).orElseThrow(() ->
-                    new RuntimeException("User not found"));
+        String eventOwnerEmailRequest = request.getEmail();
+        String eventOwnerPasswordRequest = request.getPassword();
 
-        user.setEventName(request.getEventName());
-        user.setEventDescription(request.getEventDescription());
-        user.setQuote(request.getQuote());
-        user.setCoverImageUrl(request.getCoverImageUrl());
-        user.setMusicUrl(request.getMusicUrl());
-        user.setSlug(request.getSlug());
-
-        User saved = userRepository.save(user);
-
-        return new UserResponse(saved.getId(), saved.getEmail(), saved.getSlug());
-    }
-
-    public UserResponse createEvent(CreateEventRequest request) {
-
-        if(userRepository.existsByEmail(request.getEmail())) {
+        if (userRepository.existsByEmail(eventOwnerEmailRequest)) {
             throw new RuntimeException("Email already exists");
-        }
-
-        if(userRepository.existsBySlug(request.getSlug())) {
-            throw new RuntimeException("Slug already exists");
         }
 
         User user = new User();
 
-        user.setEmail(request.getEmail());
-        user.setPasswordHash(encoder.encode(request.getPassword()));
-        user.setEventName(request.getEventName());
-        user.setSlug(request.getSlug());
-        user.setRole("EVENT_ADMIN");
+        user.setEmail(eventOwnerEmailRequest);
+        user.setPasswordHash(encoder.encode(eventOwnerPasswordRequest));
+        user.setRole("EVENT_OWNER");
         user.setActive(true);
         user.setCreatedAt(LocalDateTime.now());
 
         User saved = userRepository.save(user);
 
-        return new UserResponse(saved.getId(), saved.getEmail(), saved.getSlug());
+        return new UserResponse(saved.getId(), saved.getEmail(), saved.getRole());
+    }*/
+
+    public UserResponse getUser(Long userId) {
+
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+
+        return new UserResponse(user.getId(), user.getEmail(), user.getRole());
+    }
+
+    public UserResponse getUserByEmail(String email) {
+
+        User user = userRepository.findByEmail(email).orElseThrow(() ->
+                    new RuntimeException("User not found"));
+
+        return new UserResponse(user.getId(), user.getEmail(), user.getRole());
     }
 }

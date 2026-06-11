@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
-//@CrossOrigin(origins = "http://localhost:5173")
+
 public class AuthController {
 
     private final UserService userService;
@@ -29,8 +29,8 @@ public class AuthController {
         return userService.login(request);
     }
     
-    @PutMapping("/profile/{id}")
+    /*@PutMapping("/profile/{id}")
     public UserResponse updateProfile(@PathVariable Long id, @RequestBody UpdateProfileRequest request) {
     return userService.updateProfile(id, request);
-    }
+    }*/
 }
