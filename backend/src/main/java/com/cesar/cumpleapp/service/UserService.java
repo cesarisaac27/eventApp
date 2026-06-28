@@ -47,7 +47,7 @@ public class UserService {
         return new UserResponse(saved.getId(), saved.getEmail(), saved.getRole());
     }
 
-    public String login(LoginRequest request) {
+    public LoginResponse login(LoginRequest request) {
 
         String emailRequest = request.getEmail();
         String passwordRequest = request.getPassword();
@@ -56,11 +56,12 @@ public class UserService {
                                 new RuntimeException("User not found"));
 
         if (!encoder.matches(passwordRequest, user.getPasswordHash())) {
-
             throw new RuntimeException("Invalid credentials");
         }
 
-        return jwtService.generateToken(user.getEmail(), user.getId());
+        String token = jwtService.generateToken(user.getEmail(), user.getId());
+
+        return new LoginResponse(token, user.getRole());
     }
 
     /*public UserResponse createEventOwner(CreateEventOwnerRequest request) {

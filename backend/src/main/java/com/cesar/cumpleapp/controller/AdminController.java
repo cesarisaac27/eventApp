@@ -4,7 +4,7 @@ import com.cesar.cumpleapp.dto.CreateEventOwnerRequest;
 import com.cesar.cumpleapp.dto.UserResponse;
 import com.cesar.cumpleapp.service.UserService;
 import com.cesar.cumpleapp.entity.Event;
-import com.cesar.cumpleapp.service.EventService;
+import com.cesar.cumpleapp.service.EventMaintService;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/admin")
 public class AdminController {
 
-    private final EventService eventService;
+    private final EventMaintService eventService;
 
-    public AdminController(EventService eventService) {
-
+    public AdminController(EventMaintService eventService) {
         this.eventService = eventService;
     }
 

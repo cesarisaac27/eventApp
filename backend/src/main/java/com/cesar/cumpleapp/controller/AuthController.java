@@ -5,7 +5,7 @@ import com.cesar.cumpleapp.dto.UpdateProfileRequest;
 import com.cesar.cumpleapp.service.UserService;
 import com.cesar.cumpleapp.dto.LoginRequest;
 import com.cesar.cumpleapp.dto.UserResponse;
-
+import com.cesar.cumpleapp.dto.LoginResponse;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,7 +25,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequest request) {
+    public LoginResponse login(@RequestBody LoginRequest request) {
         return userService.login(request);
     }
     

@@ -4,6 +4,7 @@ import com.cesar.cumpleapp.dto.UploadResponseCloudinary;
 import com.cesar.cumpleapp.service.CloudinaryService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.MediaType;
 
 @RestController
 @RequestMapping("/api/upload")
@@ -16,14 +17,12 @@ public class UploadController {
         this.cloudinaryService = cloudinaryService;
     }
 
-    @PostMapping
-    public UploadResponseCloudinary upload(
-            @RequestParam("file")
-            MultipartFile file
-    ) throws Exception {
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)    
+    
+    public UploadResponseCloudinary upload(@RequestParam("file") MultipartFile file) 
+    throws Exception {
 
-        String url =
-                cloudinaryService.uploadFile(file);
+        String url = cloudinaryService.uploadFile(file);
 
         return new UploadResponseCloudinary(url);
     }

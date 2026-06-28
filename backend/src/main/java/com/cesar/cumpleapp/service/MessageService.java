@@ -16,22 +16,17 @@ public class MessageService {
     private final MessageRepository messageRepository;
     private final EventRepository eventRepository;
 
-    public MessageService(
-            MessageRepository messageRepository,
-            EventRepository eventRepository) {
-
+    public MessageService(MessageRepository messageRepository, EventRepository eventRepository) {
         this.messageRepository = messageRepository;
         this.eventRepository = eventRepository;
     }
 
     public Message createMessage(String slug, MessageRequest request) {
 
-        Event event = eventRepository.findBySlug(slug)
-                .orElseThrow(() ->
+        Event event = eventRepository.findBySlug(slug).orElseThrow(() ->
                         new RuntimeException("Event not found"));
 
         User user = event.getOwner();
-
         Message message = new Message();
 
         message.setUser(user);
