@@ -12,23 +12,21 @@ function Login() {
 
         try {
 
-            const token = await login({
+            const response = await login({
                 email,
                 password
             });
 
-            localStorage.setItem(
-                "token",
-                token
-            );
+            localStorage.setItem("token", response.token);
+            localStorage.setItem("role", response.role);
 
-            alert("Login exitoso");
+            alert("Login succesful");
 
         } catch (error) {
 
             console.error(error);
 
-            alert("Usuario o contraseña incorrectos");
+            alert("User or password invalid");
         }
     };
 

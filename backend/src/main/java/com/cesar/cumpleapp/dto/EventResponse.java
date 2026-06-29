@@ -1,5 +1,6 @@
 package com.cesar.cumpleapp.dto;
 
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,7 @@ public class EventResponse {
     private String musicUrl;
     private String slug;
     private boolean active;
+    private LocalDate eventDate;
 
     // constructor
     // getters

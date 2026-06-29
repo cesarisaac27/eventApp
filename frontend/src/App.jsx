@@ -1,11 +1,13 @@
-import Login from "./pages/Login";
-import "./index.css";
+import { Routes, Route } from "react-router-dom";
+import MainMessagePage from "./pages/MainMessagePage";
 
-function App() {
-
-    return (
-        <Login />
-    );
+export default function App() {
+  return (
+    <Routes>
+      <Route
+        path="/:slug"
+        element={<MainMessagePage />}
+      />
+    </Routes>
+  );
 }
-
-export default App;

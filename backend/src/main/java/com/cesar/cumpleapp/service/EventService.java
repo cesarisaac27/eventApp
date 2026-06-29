@@ -29,7 +29,8 @@ public class EventService {
             event.getCoverImageUrl(),
             event.getMusicUrl(),
             event.getSlug(),
-            Boolean.TRUE.equals(event.getActive())
+            Boolean.TRUE.equals(event.getActive()),
+            event.getEventDate()
         );
     }
 }

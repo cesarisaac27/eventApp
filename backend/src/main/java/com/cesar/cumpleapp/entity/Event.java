@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "events")
@@ -44,4 +44,7 @@ public class Event {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @Column(name = "event_date")
+    private LocalDate eventDate;
 }

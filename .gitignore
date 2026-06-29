@@ -69,3 +69,5 @@ backend/target/
 # IDE
 .idea/
 .vscode/
+
+.env
