@@ -1,77 +1,146 @@
-import { useImageLuminance } from "../hooks/useImageLuminance";
+import { useImageTheme } from "../hooks/useImageTheme";
+
+const BRAND_ACCENT = "#ef4444";
 
 export default function EventHero({ event }) {
   if (!event) return null;
 
-  const isDark = useImageLuminance(event.coverImageUrl);
+  const theme = useImageTheme(event.coverImageUrl);
+
+  console.log(event);
 
   return (
-    <section className="relative w-full h-screen min-h-[600px] overflow-hidden">
-
-      {/* Background */}
+    <section
+      className="
+        relative
+        w-full
+        min-h-screen
+        flex
+        flex-col
+        justify-end
+        overflow-hidden
+      "
+    >
+      {/* Imagen */}
       <img
         src={event.coverImageUrl}
         alt={event.eventName}
-        className="absolute inset-0 w-full h-full object-cover object-[50%_25%] scale-105"
+        className="
+          absolute
+          inset-0
+          w-full
+          h-full
+          object-cover
+        "
+        style={{
+          objectPosition: "center 20%",
+          filter: "brightness(.96) saturate(1.15) contrast(1.05)",
+        }}
       />
 
-      {/* Overlay suave (NO oscuro fuerte) */}
-      <div className="absolute inset-0 bg-white/10" />
-
-      {/* Gradiente PRINCIPAL (clave de tu diseño) */}
+      {/* Oscurecimiento general y difuminado progresivo a blanco */}
       <div
         className="
-          absolute inset-0
-          bg-gradient-to-b
-          from-transparent
-          via-white/10
-          to-white/90
+          absolute
+          inset-0
         "
+        style={{
+          background: `
+            linear-gradient(
+              to bottom,
+              rgba(0,0,0,.25) 0%,
+              rgba(0,0,0,.10) 40%,
+              rgba(0,0,0,.40) 70%,
+              rgba(255,255,255,.85) 90%,
+              rgba(255,255,255,1) 100%
+            )
+          `,
+        }}
       />
 
-      {/* BOTÓN (zona media como tu rectángulo rojo) */}
-      <div className="absolute left-1/2 top-[52%] -translate-x-1/2 z-10">
-
+      {/* Contenido empujado hacia abajo de forma natural */}
+      <div
+        className="
+          relative
+          z-10
+          max-w-7xl
+          mx-auto
+          w-full
+          px-12
+          pb-24
+          pt-32
+        "
+      >
         <button
           className="
-            px-12 py-5
-            rounded-full
-            text-lg font-semibold
-            shadow-2xl
-            backdrop-blur-md
-            bg-white/70
-            text-black
-            border border-black/10
-            hover:bg-white
-            transition
-            transform hover:scale-105
+            mb-6
+            px-5
+            py-2.5
+            rounded-lg
+            text-sm
+            font-semibold
+            backdrop-blur-xl
+            transition-all
+            duration-300
+            hover:scale-105
           "
+          style={{
+            background: "rgba(0,0,0,.35)",
+            border: "1px solid rgba(255,255,255,.25)",
+            color: "#fff",
+          }}
         >
           Write a Message
         </button>
-      </div>
 
-      {/* TÍTULO (zona baja como tu recuadro negro/gris) */}
-      <div className="absolute bottom-16 left-6 md:left-12 z-10 max-w-2xl">
-
-        <h1 className="text-4xl md:text-6xl font-bold text-black leading-tight">
+        <h1
+          className="
+            text-6xl
+            md:text-7xl
+            lg:text-8xl
+            font-black
+            tracking-tight
+            leading-none
+            text-white
+          "
+          style={{
+            textShadow: "0 6px 25px rgba(0,0,0,.45)",
+          }}
+        >
           {event.eventName}
         </h1>
 
+        <div
+          className="mt-6 mb-6 h-1 rounded-full"
+          style={{
+            width: 140,
+            background: BRAND_ACCENT,
+          }}
+        />
+
         {event.eventDate && (
-          <p className="mt-4 text-lg md:text-xl text-black/70">
+          <p className="mb-2 text-xl font-medium text-white/90">
             {event.eventDate}
           </p>
         )}
 
+        {/* Descripción del evento (event_description) soportando saltos de línea */}
         {event.eventDescription && (
-          <p className="mt-5 text-sm md:text-base text-black/60">
+          <p
+            className="
+              max-w-2xl
+              text-lg
+              leading-8
+              text-black/85
+            "
+            style={{
+              whiteSpace: "pre-line"
+            }}
+          >
             {event.eventDescription}
           </p>
         )}
-
       </div>
-
     </section>
   );
 }

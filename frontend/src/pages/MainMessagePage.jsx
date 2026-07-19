@@ -23,7 +23,9 @@ export default function MainMessagePage() {
       setLoading(true);
       setError(null);
 
-      const response = await fetch(`${API_URL}/api/public/events/${slug}`);
+      const response = await fetch(
+        `${API_URL}/api/public/events/${slug}`
+      );
 
       if (!response.ok) {
         throw new Error("Event not found");
@@ -31,9 +33,9 @@ export default function MainMessagePage() {
 
       const data = await response.json();
       setEvent(data);
-
-    } catch (error) {
-      setError(error.message);
+    } catch (err) {
+      console.error(err);
+      setError(err.message);
       setEvent(null);
     } finally {
       setLoading(false);
@@ -42,32 +44,39 @@ export default function MainMessagePage() {
 
   if (loading) {
     return (
-      <div className="h-screen flex items-center justify-center">
-        Loading event...
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="animate-pulse text-xl font-medium">
+          Loading event...
+        </div>
       </div>
     );
   }
 
   if (error || !event) {
     return (
-      <div className="h-screen flex items-center justify-center">
-        Event not found
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="text-xl font-medium">
+          Event not found
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header slug={slug} />
+    <div className="min-h-screen flex flex-col overflow-x-hidden bg-white">
+
+      {/* Header flotante */}
+      <Header
+        slug={slug}
+        imageUrl={event.coverImageUrl}
+      />
+
+      {/* Hero */}
       <EventHero event={event} />
 
-      <main className="flex-1 px-6 py-10">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* aquí luego irá el editor de mensajes */}
-        </div>
-      </main>
+      {/* Footer */}
+      <Footer imageUrl={event.coverImageUrl} />
 
-      <Footer />
     </div>
   );
 }
