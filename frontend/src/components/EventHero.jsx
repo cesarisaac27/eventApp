@@ -1,4 +1,6 @@
 import { useImageTheme } from "../hooks/useImageTheme";
+import { useNavigate } from "react-router-dom";
+
 
 const BRAND_ACCENT = "#ef4444";
 
@@ -6,8 +8,7 @@ export default function EventHero({ event }) {
   if (!event) return null;
 
   const theme = useImageTheme(event.coverImageUrl);
-
-  console.log(event);
+  const navigate = useNavigate();
 
   return (
     <section
@@ -72,17 +73,19 @@ export default function EventHero({ event }) {
         "
       >
         <button
+          onClick={() => navigate(`/${event.slug}/write-message`)}
           className="
-            mb-6
-            px-5
-            py-2.5
-            rounded-lg
-            text-sm
-            font-semibold
-            backdrop-blur-xl
-            transition-all
-            duration-300
-            hover:scale-105
+          mb-6
+          px-5
+          py-2.5
+          rounded-lg
+          text-sm
+          font-semibold
+          backdrop-blur-xl
+          transition-all
+          duration-300
+          hover:scale-105
+          active:scale-95
           "
           style={{
             background: "rgba(0,0,0,.35)",

@@ -13,9 +13,7 @@ public class PublicMessageController {
 
     private final MessageService messageService;
 
-    public PublicMessageController(
-            MessageService messageService
-    ) {
+    public PublicMessageController(MessageService messageService) {
         this.messageService = messageService;
     }
 
