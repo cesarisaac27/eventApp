@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import MainMessagePage from "./pages/MainMessagePage";
 import WriteMessagePage from "./pages/WriteMessagePage";
+import Login from "./pages/Login";
 
 export default function App() {
   return (
@@ -12,6 +13,10 @@ export default function App() {
       <Route
         path="/:slug"
         element={<MainMessagePage />}
+      />
+      <Route 
+        path="/login" 
+        element={<Login />} 
       />
     </Routes>
   );

@@ -9,4 +9,6 @@ public interface MessageRepository
         extends JpaRepository<Message, Long> {
 
     List<Message> findByUserId(Long userId);
+    List<Message> findByUserIdOrderByCreatedAtDesc(Long userId);
+    
 }

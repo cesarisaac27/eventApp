@@ -199,7 +199,8 @@ export default function Header({ slug, imageUrl }) {
           "
         >
 
-          <button
+          <Link
+            to="/login"
             className="
               h-full
               px-6
@@ -211,8 +212,8 @@ export default function Header({ slug, imageUrl }) {
               backdrop-blur-md
             "
           >
-            Sign In
-          </button>
+            Log In
+          </Link>
 
 
 
