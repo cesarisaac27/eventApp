@@ -55,4 +55,15 @@ public class JwtService {
             return false;
         }
     }
+
+    // Retrieve user ID
+    public Long extractUserId(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.get("userId", Long.class);
+    }
 }

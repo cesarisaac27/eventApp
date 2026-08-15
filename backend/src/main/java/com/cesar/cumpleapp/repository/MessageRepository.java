@@ -10,5 +10,22 @@ public interface MessageRepository
 
     List<Message> findByUserId(Long userId);
     List<Message> findByUserIdOrderByCreatedAtDesc(Long userId);
+    List<Message> findByUserIdAndApprovedTrueOrderByCreatedAtDesc(Long userId);
+
+
+    /*
+    Example using @query
+    @Query("""
+    SELECT m
+    FROM Message m
+    WHERE m.user.id = :userId
+    AND m.approved = true
+    ORDER BY m.createdAt DESC
+    """)
+
+    List<Message> findApprovedMessagesByUserId(@Param("userId") Long userId);
+    
+    
+    */
     
 }

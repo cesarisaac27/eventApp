@@ -33,4 +33,25 @@ public class EventService {
             event.getEventDate()
         );
     }
+
+    public EventResponse getByOwnerId(Long ownerId) {
+
+        Event event = eventRepository.findByOwnerId(ownerId)
+            .orElseThrow(() -> new RuntimeException("Event not found"));
+
+        if (!Boolean.TRUE.equals(event.getActive())) {
+            throw new RuntimeException("Event inactive");
+        }
+
+        return new EventResponse(
+            event.getEventName(),
+            event.getEventDescription(),
+            event.getQuote(),
+            event.getCoverImageUrl(),
+            event.getMusicUrl(),
+            event.getSlug(),
+            Boolean.TRUE.equals(event.getActive()),
+            event.getEventDate()
+        );
+    }
 }

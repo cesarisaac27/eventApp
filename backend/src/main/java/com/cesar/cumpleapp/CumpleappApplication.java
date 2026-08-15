@@ -14,3 +14,14 @@ public class CumpleappApplication {
 
 
 //.\mvnw.cmd spring-boot:run
+
+
+/*
+{
+  "email": "cumpleanosdelamor@gmail.com",
+  "password": "25101999",
+  "eventName": "cumpleanosfer",
+  "slug": "cumpleanosfer"
+}
+
+*/
