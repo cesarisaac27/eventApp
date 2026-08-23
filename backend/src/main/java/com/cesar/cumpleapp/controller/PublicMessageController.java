@@ -20,12 +20,18 @@ public class PublicMessageController {
     }
 
     @PostMapping("/{slug}/messages")
+    /*
+    Endpoint dedicated to create a message for event
+    */
     public Message createMessage(@PathVariable String slug, @RequestBody MessageRequest request) {
 
         return messageService.createMessage(slug, request);
     }
 
     @GetMapping("/{slug}/RetrieveMessages")
+    /*
+    endpoint dedicated to retrieve messages for the event owner dashboard
+    */
     public List<MessageResponse> getMessages(@PathVariable String slug) {
         return messageService.getMessagesBySlug(slug);
     }

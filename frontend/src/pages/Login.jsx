@@ -108,7 +108,7 @@ function Login() {
               hover:bg-red-600
             "
           >
-            Log In +
+            Log In
           </button>
 
         </form>
