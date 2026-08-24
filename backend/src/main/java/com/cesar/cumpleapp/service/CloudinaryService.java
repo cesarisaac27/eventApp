@@ -17,15 +17,8 @@ public class CloudinaryService {
 
     public String uploadFile(MultipartFile file) throws Exception {
 
-        Map<?, ?> result =
-                cloudinary.uploader()
-                        .upload(
-                                file.getBytes(),
-                                Map.of()
-                        );
+        Map<?, ?> result = cloudinary.uploader().upload(file.getBytes(), Map.of());
 
-        return result
-                .get("secure_url")
-                .toString();
+        return result.get("secure_url").toString();
     }
 }

@@ -1,6 +1,5 @@
 package com.cesar.cumpleapp.controller;
 
-import org.springframework.security.core.Authentication;
 import com.cesar.cumpleapp.dto.MessageRequest;
 import com.cesar.cumpleapp.entity.Message;
 import com.cesar.cumpleapp.service.MessageService;

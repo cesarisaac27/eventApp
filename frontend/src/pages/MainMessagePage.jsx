@@ -24,7 +24,7 @@ export default function MainMessagePage() {
       setError(null);
 
       const response = await fetch(
-        `${API_URL}/api/public/events/${slug}`
+        `${API_URL}/public/events/${slug}`
       );
 
       if (!response.ok) {

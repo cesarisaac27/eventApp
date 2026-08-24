@@ -18,7 +18,7 @@ export default function WriteMessagePage() {
   
   useEffect(() => {
 
-  fetch(`${API_URL}/api/public/events/${slug}`)
+  fetch(`${API_URL}/public/events/${slug}`)
     .then(r => r.json())
     .then(setEvent);
 
@@ -82,7 +82,7 @@ export default function WriteMessagePage() {
 
 
         const response = await fetch(
-            `${API_URL}/api/upload`,
+            `${API_URL}/upload`,
             {
                 method: "POST",
                 body: formData,
@@ -156,7 +156,7 @@ export default function WriteMessagePage() {
 
             // 2. Guardar mensaje
             const response = await fetch(
-                `${API_URL}/api/public/events/${slug}/messages`,
+                `${API_URL}/public/events/${slug}/messages`,
                 {
                     method: "POST",
                     headers: {
