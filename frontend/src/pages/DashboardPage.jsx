@@ -440,7 +440,7 @@ export default function DashboardPage() {
                                 <button
                                     onClick={() =>
                                         navigate(
-                                            `/dashboard/${event.slug}/edit-messages`
+                                            `/dashboard/${event.slug}/editMessages`
                                         )
                                     }
                                     className="

@@ -62,10 +62,104 @@ public class MessageService {
                     message.getMessage(),
                     message.getPhotoUrl(),
                     message.getVideoUrl(),
-                    message.getCreatedAt()
+                    message.getCreatedAt(),
+                    message.getApproved()
             )).toList();
         
             return messages;
 
     }
+
+
+    public List<MessageResponse> getApprovedMessagesBySlug(String slug) {
+
+        Event event = eventRepository.findBySlug(slug).orElseThrow(() ->
+                    new RuntimeException("Event not found"));
+
+        User user = event.getOwner();
+
+        List<MessageResponse> messages = messageRepository.findByUserIdAndApprovedTrueOrderByCreatedAtDesc(user.getId())
+            .stream().map(message -> new MessageResponse(
+                    message.getId(),
+                    message.getFirstName(),
+                    message.getLastName(),
+                    message.getRelationship(),
+                    message.getMessage(),
+                    message.getPhotoUrl(),
+                    message.getVideoUrl(),
+                    message.getCreatedAt(),
+                    message.getApproved()
+            )).toList();
+        
+            return messages;
+
+    }
+
+    public MessageResponse toggleApproval(String slug, Long messageId, Long userId) {
+
+        Event event = eventRepository.findBySlug(slug).orElseThrow(() ->
+                    new RuntimeException("Event not found"));
+
+
+        Message message = messageRepository.findById(messageId).orElseThrow(() ->
+                    new RuntimeException("Message not found"));
+
+
+        /*
+        * Make sure the authenticated user
+        * is the owner of the event.
+        */
+
+        if (!event.getOwner().getId().equals(userId)) {
+
+            throw new RuntimeException("You are not the owner of this event");
+        }
+
+
+    /*
+     * Toggle approval
+     */
+        message.setApproved(!Boolean.TRUE.equals(message.getApproved()));
+
+
+        Message savedMessage = messageRepository.save(message);
+
+
+        return new MessageResponse(
+            savedMessage.getId(),
+            savedMessage.getFirstName(),
+            savedMessage.getLastName(),
+            savedMessage.getRelationship(),
+            savedMessage.getMessage(),
+            savedMessage.getPhotoUrl(),
+            savedMessage.getVideoUrl(),
+            savedMessage.getCreatedAt(),
+            savedMessage.getApproved()
+        );
+    }
+
+
+
+    public void deleteMessage(String slug, Long messageId) {
+
+        Event event = eventRepository.findBySlug(slug).orElseThrow(() -> 
+                    new RuntimeException("Event not found"));
+
+        Message message = messageRepository.findById(messageId).orElseThrow(() ->
+                    new RuntimeException("Message not found"));
+
+        if (!message.getUser().getId().equals(event.getOwner().getId())) {
+
+            throw new RuntimeException("Message does not belong to this event");
+        }
+
+        messageRepository.delete(message);
+        }
+
+
+
+
+
+
+
 }

@@ -4,6 +4,7 @@ import WriteMessagePage from "./pages/WriteMessagePage";
 import Login from "./pages/Login";
 import DashboardPage from "./pages/DashboardPage";
 import MessagesPage from "./pages/MessagesPage";
+import EditMessagesPage from "./pages/EditMessagesPage";
 
 export default function App() {
   return (
@@ -23,6 +24,10 @@ export default function App() {
       <Route
         path="/dashboard/:slug/messages"
         element={<MessagesPage />}
+      />
+      <Route
+        path="/dashboard/:slug/editMessages"
+        element={<EditMessagesPage />}
       />
       <Route 
         path="/login" 

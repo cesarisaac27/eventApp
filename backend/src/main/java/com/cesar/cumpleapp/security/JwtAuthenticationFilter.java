@@ -31,7 +31,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
 
+        System.out.println(
+                "REQUEST: " +
+                request.getMethod() +
+                " " +
+                request.getRequestURI()
+        );
+
+        System.out.println(
+                "AUTH HEADER: " + authHeader
+        );
+
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+
+            System.out.println("NO JWT FOUND");
+
             filterChain.doFilter(request, response);
             return;
         }
@@ -45,6 +59,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 Long userId = jwtService.extractUserId(token);
                 String email = jwtService.extractEmail(token);
 
+                System.out.println(
+                        "JWT USER ID: " + userId
+                );
+
+                System.out.println(
+                        "JWT EMAIL: " + email
+                );
+
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
                                 userId,
@@ -57,12 +79,35 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder
                         .getContext()
                         .setAuthentication(authentication);
+
+                System.out.println(
+                        "AUTH AFTER SET: " +
+                        SecurityContextHolder
+                                .getContext()
+                                .getAuthentication()
+                );
+
+            } else {
+
+                System.out.println("INVALID JWT");
+
             }
 
         } catch (Exception e) {
 
+            System.out.println(
+                    "JWT ERROR: " + e.getMessage()
+            );
+
             SecurityContextHolder.clearContext();
         }
+
+        System.out.println(
+                "AUTH BEFORE FILTER CHAIN: " +
+                SecurityContextHolder
+                        .getContext()
+                        .getAuthentication()
+        );
 
         filterChain.doFilter(request, response);
     }

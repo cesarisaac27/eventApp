@@ -8,6 +8,7 @@ export default function Header({ slug, imageUrl }) {
   const navigate = useNavigate();
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isEventOwner, setIsEventOwner] = useState(false);
 
   const [modal, setModal] = useState({
     open: false,
@@ -27,8 +28,13 @@ export default function Header({ slug, imageUrl }) {
     const checkAuth = () => {
 
       const token = localStorage.getItem("token");
+      const role = localStorage.getItem("role");
 
       setIsLoggedIn(!!token);
+
+      setIsEventOwner(
+        !!token && role === "EVENT_OWNER"
+      );
 
     };
 
@@ -88,6 +94,7 @@ export default function Header({ slug, imageUrl }) {
     localStorage.removeItem("role");
 
     setIsLoggedIn(false);
+    setIsEventOwner(false);
 
     /*
      * Tell the rest of the application
@@ -100,6 +107,19 @@ export default function Header({ slug, imageUrl }) {
      * Return to the event's main page.
      */
     navigate(`/${slug}`);
+
+  };
+
+
+  /*
+   * ============================
+   * GO TO DASHBOARD
+   * ============================
+   */
+
+  const handleDashboard = () => {
+
+    navigate("/dashboard");
 
   };
 
@@ -309,6 +329,33 @@ export default function Header({ slug, imageUrl }) {
 
 
             {/* =================================
+                DASHBOARD
+            ================================== */}
+
+            {isEventOwner && (
+
+              <button
+                onClick={handleDashboard}
+                className="
+                  h-full
+                  px-6
+                  flex
+                  items-center
+                  text-white
+                  font-semibold
+                  transition-all
+                  duration-300
+                  hover:bg-white/10
+                  backdrop-blur-md
+                "
+              >
+                Dashboard
+              </button>
+
+            )}
+
+
+            {/* =================================
                 LOGIN / LOGOUT
             ================================== */}
 
@@ -437,15 +484,17 @@ export default function Header({ slug, imageUrl }) {
 
             {/* Modal header */}
 
-            <div className="
-              flex
-              items-center
-              justify-between
-              border-b
-              border-slate-200
-              px-6
-              py-5
-            ">
+            <div
+              className="
+                flex
+                items-center
+                justify-between
+                border-b
+                border-slate-200
+                px-6
+                py-5
+              "
+            >
 
               <h2
                 className="text-xl font-bold"
@@ -491,12 +540,14 @@ export default function Header({ slug, imageUrl }) {
 
             {/* Modal footer */}
 
-            <div className="
-              flex
-              justify-end
-              px-6
-              pb-6
-            ">
+            <div
+              className="
+                flex
+                justify-end
+                px-6
+                pb-6
+              "
+            >
 
               <button
                 onClick={closeModal}

@@ -1,5 +1,6 @@
 package com.cesar.cumpleapp.controller;
 
+import org.springframework.security.core.Authentication;
 import com.cesar.cumpleapp.dto.MessageRequest;
 import com.cesar.cumpleapp.entity.Message;
 import com.cesar.cumpleapp.service.MessageService;
@@ -34,5 +35,16 @@ public class PublicMessageController {
     */
     public List<MessageResponse> getMessages(@PathVariable String slug) {
         return messageService.getMessagesBySlug(slug);
+    }
+    
+    /*
+    Retrieve approved messages
+
+    Show approved message, used in show memories 
+    input Slug 
+     */
+    @GetMapping("/{slug}/RetrieveApprovedMessages")
+    public List<MessageResponse> getApprovedMessages(@PathVariable String slug) {
+        return messageService.getApprovedMessagesBySlug(slug);
     }
 }

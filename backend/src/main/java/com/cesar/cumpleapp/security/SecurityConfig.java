@@ -76,6 +76,11 @@ public class SecurityConfig {
                         "/api/admin/**"
                 ).authenticated()
 
+                // Event Owner
+                .requestMatchers(
+                        "/api/owner/**"
+                ).authenticated()
+
                 // Perfil
                 .requestMatchers(
                         "/users/me"
@@ -108,7 +113,8 @@ public class SecurityConfig {
                         "POST",
                         "PUT",
                         "DELETE",
-                        "OPTIONS"
+                        "OPTIONS",
+                        "PATCH"
                 )
         );
 

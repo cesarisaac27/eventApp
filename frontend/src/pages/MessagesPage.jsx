@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getEventMessages, getMyEvent } from "../services/eventApi";
+import { getMyEvent, getEventApprovedMessages } from "../services/eventApi";
 import { useImageTheme } from "../hooks/useImageTheme";
 
 import Header from "../components/Header";
@@ -68,7 +68,7 @@ export default function MessagesPage() {
                  * Get messages
                  */
 
-                const messagesData = await getEventMessages(slug);
+                const messagesData = await getEventApprovedMessages(slug);
 
                 setMessages(messagesData);
 

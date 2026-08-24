@@ -17,4 +17,5 @@ public class MessageResponse {
     private String photoUrl;
     private String videoUrl;
     private LocalDateTime createdAt;
+    private Boolean approved;
 }
