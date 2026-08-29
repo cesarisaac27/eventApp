@@ -10,13 +10,11 @@ export default function App() {
   return (
     <Routes>
 
-      {/* Página principal */}
       <Route
         path="/"
         element={<Navigate to="/login" replace />}
       />
 
-      {/* Eventos públicos */}
       <Route
         path="/:slug/write-message"
         element={<WriteMessagePage />}
@@ -27,7 +25,6 @@ export default function App() {
         element={<MainMessagePage />}
       />
 
-      {/* Dashboard */}
       <Route
         path="/dashboard"
         element={<DashboardPage />}
@@ -43,7 +40,6 @@ export default function App() {
         element={<EditMessagesPage />}
       />
 
-      {/* Login */}
       <Route
         path="/login"
         element={<Login />}
